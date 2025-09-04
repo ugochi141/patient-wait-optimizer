@@ -1,25 +1,27 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import logging
+from prometheus_client import make_asgi_app
 
-# Configure logging
+# Project: patient-wait-optimizer
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("Starting up patient-wait-optimizer...")
+    logger.info("Starting patient-wait-optimizer service...")
     yield
-    logger.info("Shutting down patient-wait-optimizer...")
+    logger.info("Shutting down patient-wait-optimizer service...")
 
 app = FastAPI(
     title="patient-wait-optimizer",
-    description="AI-powered queue management system for phlebotomy services with predictive wait times",
-    version="1.0.0",
+    description="Production-ready healthcare IT system",
+    version="2.0.0",
     lifespan=lifespan
 )
 
+# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -28,22 +30,28 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Metrics endpoint
+metrics_app = make_asgi_app()
+app.mount("/metrics", metrics_app)
+
 @app.get("/")
 async def root():
     return {
-        "project": "patient-wait-optimizer",
+        "service": "patient-wait-optimizer",
         "status": "operational",
-        "description": "AI-powered queue management system for phlebotomy services with predictive wait times"
+        "version": "2.0.0"
     }
 
 @app.get("/health")
 async def health_check():
     return {"status": "healthy"}
 
-@app.get("/api/v1/status")
-async def api_status():
-    return {
-        "api_version": "v1",
-        "status": "operational",
-        "endpoints_available": True
-    }
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    try:
+        while True:
+            data = await websocket.receive_text()
+            await websocket.send_text(f"Echo: {data}")
+    except:
+        pass
