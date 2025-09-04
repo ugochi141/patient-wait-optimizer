@@ -1,0 +1,25 @@
+{
+  "timestamp": "2024-01-15T10:30:00",
+  "location": "Main Lab Phlebotomy",
+  "queue_status": {
+    "total_waiting": 12,
+    "average_wait_time": 18.5,
+    "estimated_wait_new_patient": 22,
+    "staff_available": 4,
+    "stations_open": 5
+  },
+  "patients": [
+    {"number": "A001", "check_in": "10:15:00", "priority": "routine", "status": "waiting"},
+    {"number": "A002", "check_in": "10:18:00", "priority": "stat", "status": "in_service"},
+    {"number": "A003", "check_in": "10:20:00", "priority": "routine", "status": "waiting"},
+    {"number": "A004", "check_in": "10:22:00", "priority": "routine", "status": "waiting"},
+    {"number": "A005", "check_in": "10:23:00", "priority": "fasting", "status": "in_service"},
+    {"number": "A006", "check_in": "10:25:00", "priority": "pediatric", "status": "waiting"},
+    {"number": "A007", "check_in": "10:26:00", "priority": "routine", "status": "waiting"},
+    {"number": "A008", "check_in": "10:27:00", "priority": "stat", "status": "waiting"},
+    {"number": "A009", "check_in": "10:28:00", "priority": "routine", "status": "in_service"},
+    {"number": "A010", "check_in": "10:29:00", "priority": "routine", "status": "waiting"},
+    {"number": "A011", "check_in": "10:29:30", "priority": "routine", "status": "waiting"},
+    {"number": "A012", "check_in": "10:30:00", "priority": "routine", "status": "waiting"}
+  ]
+}
